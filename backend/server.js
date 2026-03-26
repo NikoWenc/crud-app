@@ -7,7 +7,7 @@ import router from "./routes/userRoutes.js";
 const app = express();
 dotenv.config();
 
-app.use(cors()); // add origin: "https://your-frontend-domain.com" once in production
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
