@@ -3,17 +3,20 @@ import { Outlet } from "react-router-dom";
 
 function EditUser() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-6 py-24 font-body bg-surface">
-      <div className="w-full max-w-lg">
-        {/* Page Header Section */}
-        <div className="mb-12 text-center">
-          <h1 className="text-[2.75rem] font-extrabold tracking-tight text-on-surface mb-3 leading-tight">
-            Edit User
-          </h1>
-        </div>
+    <main className="min-h-screen px-[8.5rem] pt-[3.5rem] pb-[3.5rem] font-body bg-surface">
+      <div className="max-w-[1440px] mx-auto flex flex-col items-center">
+        <div className="w-full max-w-lg">
+          {/* Page Header Section */}
+          <div className="mb-[5.5rem] text-center">
+            <span className="label-sm text-on-surface-variant block mb-3">
+              Action
+            </span>
+            <h1 className="display-md font-bold text-on-surface">Edit User</h1>
+          </div>
 
-        {/* Form Container */}
-        <Outlet />
+          {/* Form Container */}
+          <Outlet />
+        </div>
       </div>
     </main>
   );

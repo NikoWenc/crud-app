@@ -18,83 +18,88 @@ function EditUserForm() {
   };
 
   if (mutation.isPending) {
-    return <div>Updating user...</div>;
+    return (
+      <div className="text-center body-md text-on-surface-variant">
+        Updating user...
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error updating user: {error.message}</div>;
+    return (
+      <div className="text-center body-md text-error">
+        Error updating user: {error.message}
+      </div>
+    );
   }
 
   return (
-    <div className="bg-surface-container-lowest p-10 rounded-xl shadow-[0_12px_40px_rgba(45,52,53,0.04)]">
-      <form className="space-y-8" onSubmit={handleSubmit}>
+    <div className="bg-surface-container-lowest p-[4rem] rounded-xl ambient-shadow">
+      <form className="space-y-[2.5rem]" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <label
-            className="block text-[0.6875rem] font-bold tracking-[0.05em] uppercase text-on-surface-variant"
+            className="label-sm text-on-surface-variant block"
             htmlFor="username"
           >
-            Username:
+            Username
           </label>
-          <div className="relative">
-            <input
-              className="w-full px-0 py-3 bg-transparent border-0 border-b border-outline-variant/15 focus:border-tertiary focus:ring-0 text-[0.875rem] text-on-surface placeholder:text-outline-variant/40 transition-all"
-              type="text"
-              id="username"
-              name="username"
-              value={user.username}
-              onChange={handleInputChange}
-            />
-          </div>
+          <input
+            className="w-full bg-surface-container-lowest ghost-border rounded-md px-4 py-3 body-md text-on-surface focus:outline-none focus:border-tertiary transition-all"
+            type="text"
+            id="username"
+            name="username"
+            placeholder="John Doe"
+            value={user.username}
+            onChange={handleInputChange}
+          />
         </div>
         <div className="space-y-2">
           <label
-            className="block text-[0.6875rem] font-bold tracking-[0.05em] uppercase text-on-surface-variant"
+            className="label-sm text-on-surface-variant block"
             htmlFor="email"
           >
-            Email:
+            Email Address
           </label>
-          <div className="relative">
-            <input
-              className="w-full px-0 py-3 bg-transparent border-0 border-b border-outline-variant/15 focus:border-tertiary focus:ring-0 text-[0.875rem] text-on-surface placeholder:text-outline-variant/40 transition-all"
-              type="email"
-              id="email"
-              name="email"
-              value={user.email}
-              onChange={handleInputChange}
-            />
-          </div>
+          <input
+            className="w-full bg-surface-container-lowest ghost-border rounded-md px-4 py-3 body-md text-on-surface focus:outline-none focus:border-tertiary transition-all"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="john@example.com"
+            value={user.email}
+            onChange={handleInputChange}
+          />
         </div>
         <div className="space-y-2">
           <label
-            className="block text-[0.6875rem] font-bold tracking-[0.05em] uppercase text-on-surface-variant"
+            className="label-sm text-on-surface-variant block"
             htmlFor="address"
           >
-            Address
+            Postal Address
           </label>
-          <div className="relative">
-            <textarea
-              className="w-full px-0 py-3 bg-transparent border-0 border-b border-outline-variant/15 focus:border-tertiary focus:ring-0 text-[0.875rem] text-on-surface placeholder:text-outline-variant/40 transition-all resize-none"
-              id="address"
-              name="address"
-              rows="3"
-              required
-              value={user.address}
-              onChange={handleInputChange}
-            ></textarea>
-          </div>
+          <textarea
+            className="w-full bg-surface-container-lowest ghost-border rounded-md px-4 py-3 body-md text-on-surface focus:outline-none focus:border-tertiary transition-all resize-none"
+            id="address"
+            name="address"
+            rows="4"
+            required
+            placeholder="123 Street, City, Country"
+            value={user.address}
+            onChange={handleInputChange}
+          ></textarea>
         </div>
 
         {/* Actions Row */}
-        <div className="pt-8 flex items-center justify-end gap-6">
+        <div className="pt-6 flex items-center justify-end gap-6">
           <button
             type="button"
             onClick={() => navigate("/")}
-            className="text-on-surface-variant hover:text-on-surface transition-colors duration-200 text-sm font-medium"
+            className="text-on-surface-variant hover:text-on-surface transition-colors duration-200 body-md font-medium"
           >
             Cancel
           </button>
           <button
-            className="bg-tertiary text-on-tertiary px-8 py-3 rounded-md font-semibold text-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200 shadow-sm disabled:opacity-50"
+            className="bg-tertiary text-on-tertiary px-10 py-3.5 rounded-md font-semibold text-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
             type="submit"
             disabled={mutation.isPending}
           >
