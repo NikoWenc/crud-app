@@ -53,11 +53,11 @@ const Users = () => {
   }
 
   return (
-    <main className="max-w-[1440px] mx-auto px-[8.5rem] pt-[3.5rem] pb-[3.5rem] font-body bg-surface min-h-screen">
+    <main className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-[8.5rem] pt-[2rem] sm:pt-[3.5rem] pb-[3.5rem] font-body bg-surface min-h-screen">
       {/* Header Section */}
-      <header className="flex justify-between items-end mb-[1.5rem]">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-[1.5rem] gap-4">
         <div>
-          <span className="label-sm text-on-surface-variant block mb-3">
+          <span className="label-sm text-on-surface-variant block mb-1 sm:mb-3">
             Management
           </span>
           <h1 className="headline-sm font-bold text-on-surface">
@@ -73,81 +73,87 @@ const Users = () => {
 
       {/* User List Section */}
       <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-2xl">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-surface-container-low">
-              <th className="px-10 py-6 label-sm text-on-surface-variant">
-                Name
-              </th>
-              <th className="px-10 py-6 label-sm text-on-surface-variant">
-                Email
-              </th>
-              <th className="px-10 py-6 label-sm text-on-surface-variant">
-                Address
-              </th>
-              <th className="px-10 py-6 label-sm text-on-surface-variant text-right">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentUsers.length > 0 ? (
-              currentUsers.map((user) => (
-                <tr
-                  key={user._id}
-                  className="hover:bg-surface-container-low transition-colors duration-200 group"
-                >
-                  <td className="px-10 py-4">
-                    <div className="flex items-center gap-6">
-                      <div className="w-12 h-12 rounded-full bg-surface-container overflow-hidden flex items-center justify-center text-on-surface-variant">
-                        <span className="material-symbols-outlined text-[20px]">
-                          person
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[600px] sm:min-w-full">
+            <thead>
+              <tr className="bg-surface-container-low">
+                <th className="px-6 sm:px-10 py-6 label-sm text-on-surface-variant">
+                  Name
+                </th>
+                <th className="px-6 sm:px-10 py-6 label-sm text-on-surface-variant">
+                  Email
+                </th>
+                <th className="px-6 sm:px-10 py-6 label-sm text-on-surface-variant">
+                  Address
+                </th>
+                <th className="px-6 sm:px-10 py-6 label-sm text-on-surface-variant text-right">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentUsers.length > 0 ? (
+                currentUsers.map((user) => (
+                  <tr
+                    key={user._id}
+                    className="hover:bg-surface-container-low transition-colors duration-200 group"
+                  >
+                    <td className="px-6 sm:px-10 py-4">
+                      <div className="flex items-center gap-4 sm:gap-6">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface-container overflow-hidden flex items-center justify-center text-on-surface-variant shrink-0">
+                          <span className="material-symbols-outlined text-[18px] sm:text-[20px]">
+                            person
+                          </span>
+                        </div>
+                        <span className="body-md font-semibold text-on-surface truncate">
+                          {user.username}
                         </span>
                       </div>
-                      <span className="body-md font-semibold text-on-surface">
-                        {user.username}
+                    </td>
+                    <td className="px-6 sm:px-10 py-4 body-md text-on-surface-variant">
+                      <span className="truncate block max-w-[150px] sm:max-w-none">
+                        {user.email}
                       </span>
-                    </div>
-                  </td>
-                  <td className="px-10 py-4 body-md text-on-surface-variant">
-                    {user.email}
-                  </td>
-                  <td className="px-10 py-4 body-md text-on-surface-variant">
-                    {user.address}
-                  </td>
-                  <td className="px-10 py-4 text-right">
-                    <div className="flex justify-end gap-8">
-                      <button
-                        className="text-tertiary body-md font-medium hover:underline transition-all"
-                        onClick={() => navigate(`/editUser/${user._id}`)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="text-error body-md font-medium hover:opacity-70 transition-all"
-                        onClick={() => handleDelete(user._id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
+                    </td>
+                    <td className="px-6 sm:px-10 py-4 body-md text-on-surface-variant">
+                      <span className="truncate block max-w-[200px] sm:max-w-none">
+                        {user.address}
+                      </span>
+                    </td>
+                    <td className="px-6 sm:px-10 py-4 text-right">
+                      <div className="flex justify-end gap-4 sm:gap-8">
+                        <button
+                          className="text-tertiary body-md font-medium hover:underline transition-all"
+                          onClick={() => navigate(`/editUser/${user._id}`)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="text-error body-md font-medium hover:opacity-70 transition-all"
+                          onClick={() => handleDelete(user._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="4"
+                    className="px-10 py-16 text-center text-on-surface-variant body-md"
+                  >
+                    No users found.
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan="4"
-                  className="px-10 py-16 text-center text-on-surface-variant body-md"
-                >
-                  No users found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* Pagination Section */}
-        <div className="px-10 py-6 flex items-center justify-between bg-surface-container-lowest">
+        <div className="px-6 sm:px-10 py-6 flex flex-col sm:flex-row items-center justify-between bg-surface-container-lowest gap-4">
           <span className="label-sm text-on-surface-variant">
             Showing {totalUsers === 0 ? 0 : startIndex + 1} -{" "}
             {Math.min(endIndex, totalUsers)} of{" "}
@@ -176,6 +182,7 @@ const Users = () => {
         </div>
       </div>
     </main>
+
   );
 };
 

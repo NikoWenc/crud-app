@@ -34,8 +34,8 @@ function EditUserForm() {
   }
 
   return (
-    <div className="bg-surface-container-lowest p-[4rem] rounded-xl ambient-shadow">
-      <form className="space-y-[2.5rem]" onSubmit={handleSubmit}>
+    <div className="bg-surface-container-lowest p-6 sm:p-10 md:p-16 rounded-xl ambient-shadow">
+      <form className="space-y-[2rem] sm:space-y-[2.5rem]" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <label
             className="label-sm text-on-surface-variant block"
