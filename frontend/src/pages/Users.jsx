@@ -1,8 +1,8 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../api/userAPI";
 import { useNavigate } from "react-router-dom";
 import useHandleDelete from "../utils/useHandleDelete";
+import usePagination from "../utils/usePagination";
 
 const Users = () => {
   const navigate = useNavigate();
@@ -14,12 +14,31 @@ const Users = () => {
     error,
   } = useQuery({ queryKey: ["users"], queryFn: getUsers });
 
+  const {
+    handleNextPage,
+    handlePrevPage,
+    currentPage,
+    currentUsers,
+    totalUsers,
+    totalPages,
+    startIndex,
+    endIndex,
+  } = usePagination(users);
+
   if (isLoading) {
-    return <div>Loading users...</div>;
+    return (
+      <div className="flex justify-center items-center w-screen h-screen text-on-surface-variant">
+        Loading users...
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error fetching users: {error.message}</div>;
+    return (
+      <div className="flex justify-center items-center w-screen h-screen text-on-surface-variant">
+        Error fetching users: {error.message}
+      </div>
+    );
   }
 
   return (
@@ -63,60 +82,83 @@ const Users = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-outline-variant/10">
-            {users?.map((user) => (
-              <tr
-                key={user._id}
-                className="hover:bg-surface-container-low transition-colors duration-200"
-              >
-                <td className="px-8 py-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-surface-container overflow-hidden flex items-center justify-center text-on-surface-variant">
-                      <span className="material-symbols-outlined">person</span>
+            {currentUsers.length > 0 ? (
+              currentUsers.map((user) => (
+                <tr
+                  key={user._id}
+                  className="hover:bg-surface-container-low transition-colors duration-200"
+                >
+                  <td className="px-8 py-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-surface-container overflow-hidden flex items-center justify-center text-on-surface-variant">
+                        <span className="material-symbols-outlined">
+                          person
+                        </span>
+                      </div>
+                      <span className="text-[0.875rem] font-semibold text-on-surface">
+                        {user.username}
+                      </span>
                     </div>
-                    <span className="text-[0.875rem] font-semibold text-on-surface">
-                      {user.username}
-                    </span>
-                  </div>
-                </td>
-                <td className="px-8 py-6 text-[0.875rem] text-on-surface-variant">
-                  {user.email}
-                </td>
-                <td className="px-8 py-6 text-[0.875rem] text-on-surface-variant">
-                  {user.address}
-                </td>
-                <td className="px-8 py-6 text-right">
-                  <div className="flex justify-end gap-4">
-                    <button
-                      className="text-tertiary text-[0.875rem] font-medium hover:underline transition-all"
-                      onClick={() => navigate(`/editUser/${user._id}`)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="text-error text-[0.875rem] font-medium hover:opacity-70 transition-all"
-                      onClick={() => handleDelete(user._id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  </td>
+                  <td className="px-8 py-6 text-[0.875rem] text-on-surface-variant">
+                    {user.email}
+                  </td>
+                  <td className="px-8 py-6 text-[0.875rem] text-on-surface-variant">
+                    {user.address}
+                  </td>
+                  <td className="px-8 py-6 text-right">
+                    <div className="flex justify-end gap-4">
+                      <button
+                        className="text-tertiary text-[0.875rem] font-medium hover:underline transition-all"
+                        onClick={() => navigate(`/editUser/${user._id}`)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="text-error text-[0.875rem] font-medium hover:opacity-70 transition-all"
+                        onClick={() => handleDelete(user._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="4"
+                  className="px-8 py-10 text-center text-on-surface-variant text-[0.875rem]"
+                >
+                  No users found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
 
-        {/* Pagination / Footer */}
+        {/* Pagination */}
         <div className="px-8 py-5 flex items-center justify-between border-t border-outline-variant/5 bg-surface-container-lowest">
           <span className="text-[0.6875rem] font-medium tracking-[0.05em] uppercase text-on-surface-variant">
-            Showing 2 of 48 Users
+            Showing {totalUsers === 0 ? 0 : startIndex + 1} -{" "}
+            {Math.min(endIndex, totalUsers)} of{" "}
+            <b className="font-extrabold">{totalUsers}</b> Total Users
           </span>
           <div className="flex gap-2">
-            <button className="w-8 h-8 flex items-center justify-center rounded bg-surface-container-low text-on-surface hover:bg-surface-container-highest transition-all">
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="w-8 h-8 flex items-center justify-center rounded bg-surface-container-low text-on-surface hover:bg-surface-container-highest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <span className="material-symbols-outlined text-[18px]">
                 chevron_left
               </span>
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded bg-surface-container-low text-on-surface hover:bg-surface-container-highest transition-all">
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages || totalPages === 0}
+              className="w-8 h-8 flex items-center justify-center rounded bg-surface-container-low text-on-surface hover:bg-surface-container-highest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <span className="material-symbols-outlined text-[18px]">
                 chevron_right
               </span>

@@ -15,6 +15,7 @@ function useHandleSubmit(id, user, mutationFn) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries("users");
+      navigate("/");
     },
   });
 
@@ -23,12 +24,11 @@ function useHandleSubmit(id, user, mutationFn) {
 
     mutation.mutate(user);
     console.log("User data submitted:", user);
-
-    navigate("/");
   };
+
   return {
     handleSubmit,
-    submitPending: mutation.isPending,
+    mutation,
   };
 }
 

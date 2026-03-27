@@ -1,42 +1,13 @@
-import React, { useEffect } from "react";
-import { getUserById } from "../api/userAPI";
-import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import useHandleSubmit from "../utils/useHandleSubmit";
 import { editUser } from "../api/userAPI";
+import useFetchUser from "../utils/useFetchUser";
 
 function EditUserForm() {
-  const userData = {
-    username: "",
-    email: "",
-    address: "",
-  };
-
-  const [user, setUser] = useState(userData);
   const { id } = useParams();
-  const { handleSubmit, submitPending } = useHandleSubmit(id, user, editUser);
+  const { user, setUser, error } = useFetchUser(id);
+  const { handleSubmit, mutation } = useHandleSubmit(id, user, editUser);
   const navigate = useNavigate();
-
-  const { data: fetchedUser, error } = useQuery({
-    queryKey: ["users", id],
-    queryFn: () => getUserById(id),
-  });
-
-  useEffect(() => {
-    async function fetchUser() {
-      try {
-        const userData = await getUserById(id);
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    }
-
-    if (id) {
-      fetchUser();
-    }
-  }, [id, fetchedUser]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,7 +17,7 @@ function EditUserForm() {
     }));
   };
 
-  if (submitPending) {
+  if (mutation.isPending) {
     return <div>Updating user...</div>;
   }
 
@@ -125,9 +96,9 @@ function EditUserForm() {
           <button
             className="bg-tertiary text-on-tertiary px-8 py-3 rounded-md font-semibold text-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200 shadow-sm disabled:opacity-50"
             type="submit"
-            disabled={submitPending}
+            disabled={mutation.isPending}
           >
-            {submitPending ? "Updating..." : "Update User"}
+            {mutation.isPending ? "Updating..." : "Update User"}
           </button>
         </div>
       </form>
