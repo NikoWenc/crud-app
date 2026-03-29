@@ -76,7 +76,9 @@ export const getUserById = async (req, res) => {
 export const getUsersByName = async (req, res) => {
   try {
     const { username } = req.params;
-    const searchRes = await User.find({ username });
+    const searchRes = await User.find({
+      username: { $regex: username, $options: "i" },
+    });
     if (!searchRes) {
       return res.status(404).json({ message: "User not found" });
     }

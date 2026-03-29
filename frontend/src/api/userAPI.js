@@ -4,7 +4,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const getUsers = async () => {
   try {
-    const response = await axios.get(`${SERVER_URL}/users`);
+    const response = await axios.get(`${SERVER_URL}/api/users`);
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -14,7 +14,7 @@ const getUsers = async () => {
 
 const getUsersByName = async (username) => {
   try {
-    const response = await axios.get(`${SERVER_URL}/users/${username}`);
+    const response = await axios.get(`${SERVER_URL}/api/users/${username}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -24,7 +24,7 @@ const getUsersByName = async (username) => {
 
 const addUser = async (userData) => {
   try {
-    const response = await axios.post(`${SERVER_URL}/addUser`, userData);
+    const response = await axios.post(`${SERVER_URL}/api/users`, userData);
     return response.data;
   } catch (error) {
     console.error("Error creating user:", error);
@@ -34,7 +34,7 @@ const addUser = async (userData) => {
 
 const getUserById = async (id) => {
   try {
-    const response = await axios.get(`${SERVER_URL}/user/${id}`);
+    const response = await axios.get(`${SERVER_URL}/api/users/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching user by ID:", error);
@@ -44,10 +44,7 @@ const getUserById = async (id) => {
 
 const editUser = async (id, userData) => {
   try {
-    const response = await axios.put(
-      `${SERVER_URL}/editUser/user/${id}`,
-      userData,
-    );
+    const response = await axios.put(`${SERVER_URL}/api/users/${id}`, userData);
     return response.data;
   } catch (error) {
     console.error("Error editing user:", error);
@@ -57,7 +54,7 @@ const editUser = async (id, userData) => {
 
 const deleteUser = async (id) => {
   try {
-    const response = await axios.delete(`${SERVER_URL}/deleteUser/user/${id}`);
+    const response = await axios.delete(`${SERVER_URL}/api/users/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error deleting user:", error);

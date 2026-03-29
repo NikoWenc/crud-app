@@ -7,16 +7,18 @@ import router from "./routes/userRoutes.js";
 const app = express();
 dotenv.config();
 
-app.use(cors({ origin: process.env.FRONTEND_URL }));
+app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:5173" }));
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
 
-app.use("/", router);
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+app.use("/api", router);
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
