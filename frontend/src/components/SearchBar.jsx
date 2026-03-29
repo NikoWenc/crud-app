@@ -53,14 +53,13 @@ function SearchBar({ onSubmit, onRefresh }) {
       </div>
       <button
         className="w-full lg:w-auto bg-blue-700 text-white px-8 py-3 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all duration-150 flex items-center justify-center lg:justify-start gap-3 lg:ml-auto"
-        onClick={() => navigate("/addUser")}
+        onClick={() => navigate("/api/users")}
       >
         <span className="material-symbols-outlined text-[20px]">add</span>
         Add User
       </button>
     </div>
   );
-
 }
 
 export default SearchBar;

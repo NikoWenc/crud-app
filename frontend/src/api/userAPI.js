@@ -14,7 +14,9 @@ const getUsers = async () => {
 
 const getUsersByName = async (username) => {
   try {
-    const response = await axios.get(`${SERVER_URL}/api/users/${username}`);
+    const response = await axios.get(
+      `${SERVER_URL}/api/users/search/${username}`,
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -27,7 +29,10 @@ const addUser = async (userData) => {
     const response = await axios.post(`${SERVER_URL}/api/users`, userData);
     return response.data;
   } catch (error) {
-    console.error("Error creating user:", error);
+    console.error(
+      "Error creating user:",
+      error.response?.data || error.message,
+    );
     throw error;
   }
 };

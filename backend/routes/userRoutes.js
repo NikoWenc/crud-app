@@ -13,16 +13,16 @@ const router = Router();
 
 // Example route
 router.get("/users", getUsers);
-router.get("/users/:username", getUsersByName);
+router.get("/users/search/:username", getUsersByName);
 router.get("/users/:id", getUserById);
 router.post(
   "/users",
   [
-    body("name")
+    body("username")
       .notEmpty()
-      .withMessage("Name is required")
+      .withMessage("Username is required")
       .isLength({ min: 2, max: 100 })
-      .withMessage("Name must be between 2 and 100 characters long"),
+      .withMessage("Username must be between 2 and 100 characters long"),
     body("email").isEmail().withMessage("Valid email is required"),
   ],
   (req, res, next) => {
@@ -38,11 +38,11 @@ router.post(
 router.put(
   "/users/:id",
   [
-    body("name")
+    body("username")
       .notEmpty()
-      .withMessage("Name is required")
+      .withMessage("Username is required")
       .isLength({ min: 2, max: 100 })
-      .withMessage("Name must be between 2 and 100 characters long"),
+      .withMessage("Username must be between 2 and 100 characters long"),
     body("email").isEmail().withMessage("Valid email is required"),
   ],
   (req, res, next) => {

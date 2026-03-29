@@ -124,7 +124,7 @@ const Users = () => {
                       <div className="flex justify-end gap-4 sm:gap-8">
                         <button
                           className="text-tertiary body-md font-medium hover:underline transition-all"
-                          onClick={() => navigate(`/editUser/${user._id}`)}
+                          onClick={() => navigate(`/api/users/${user._id}`)}
                         >
                           Edit
                         </button>
@@ -182,7 +182,6 @@ const Users = () => {
         </div>
       </div>
     </main>
-
   );
 };
 

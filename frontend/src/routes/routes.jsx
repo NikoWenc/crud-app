@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         element: <Users />,
       },
       {
-        path: "/addUser",
+        path: "/api/users",
         element: <AddUser />,
         children: [
           {
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/editUser/:id",
+        path: "/api/users/:id",
         element: <EditUser />,
         children: [
           {
