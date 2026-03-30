@@ -54,7 +54,7 @@ function EditUserForm() {
             type="text"
             id="username"
             name="username"
-            placeholder="John Doe"
+            placeholder="username"
             value={user.username}
             onChange={handleInputChange}
           />
