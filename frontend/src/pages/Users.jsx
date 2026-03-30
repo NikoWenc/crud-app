@@ -39,7 +39,8 @@ const Users = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center w-screen h-screen text-on-surface-variant">
-        Loading users...
+        Loading users... (this may take 2-5 minutes because the server is on
+        free hosting (Render))
       </div>
     );
   }
