@@ -19,8 +19,10 @@ router.post(
   "/users",
   [
     body("username")
+      .trim()
       .notEmpty()
       .withMessage("Username is required")
+      .bail()
       .isLength({ min: 2, max: 100 })
       .withMessage("Username must be between 2 and 100 characters long"),
     body("email").isEmail().withMessage("Valid email is required"),
@@ -39,8 +41,10 @@ router.put(
   "/users/:id",
   [
     body("username")
+      .trim()
       .notEmpty()
       .withMessage("Username is required")
+      .bail()
       .isLength({ min: 2, max: 100 })
       .withMessage("Username must be between 2 and 100 characters long"),
     body("email").isEmail().withMessage("Valid email is required"),

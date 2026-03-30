@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { addUser } from "../api/userAPI.js";
 import useHandleSubmit from "../hooks/useHandleSubmit";
 import { useNavigate } from "react-router-dom";
+import ValidationError from "./ValidationError.jsx";
 
 function AddUserForm() {
   const userData = {
@@ -12,7 +13,8 @@ function AddUserForm() {
 
   const [user, setUser] = useState(userData);
   const navigate = useNavigate();
-  const { handleSubmit, mutation } = useHandleSubmit(null, user, addUser);
+  const { handleSubmit, isPending, userNameError, emailError } =
+    useHandleSubmit(null, user, addUser);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +24,7 @@ function AddUserForm() {
     }));
   };
 
-  if (mutation.isPending) {
+  if (isPending) {
     return (
       <div className="text-center body-md text-on-surface-variant">
         Adding user...
@@ -43,6 +45,7 @@ function AddUserForm() {
           >
             Username
           </label>
+          {userNameError ? <ValidationError err={userNameError} /> : null}
           <input
             className="w-full bg-surface-container-lowest ghost-border rounded-md px-4 py-3 body-md text-on-surface focus:outline-none focus:border-tertiary transition-all"
             type="text"
@@ -60,6 +63,7 @@ function AddUserForm() {
           >
             Email Address
           </label>
+          {emailError ? <ValidationError err={emailError} /> : null}
           <input
             className="w-full bg-surface-container-lowest ghost-border rounded-md px-4 py-3 body-md text-on-surface focus:outline-none focus:border-tertiary transition-all"
             type="email"
@@ -101,9 +105,9 @@ function AddUserForm() {
           <button
             className="bg-tertiary text-on-tertiary px-10 py-3.5 rounded-md font-semibold text-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
             type="submit"
-            disabled={mutation.isPending}
+            disabled={isPending}
           >
-            {mutation.isPending ? "Adding..." : "Add User"}
+            {isPending ? "Adding..." : "Add User"}
           </button>
         </div>
       </form>

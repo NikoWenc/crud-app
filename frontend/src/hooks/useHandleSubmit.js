@@ -19,6 +19,10 @@ function useHandleSubmit(id, user, mutationFn) {
     },
   });
 
+  const error = mutation.error?.response?.data?.errors;
+  const userNameError = error?.find((err) => err.path === "username");
+  const emailError = error?.find((err) => err.path === "email");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -28,7 +32,9 @@ function useHandleSubmit(id, user, mutationFn) {
 
   return {
     handleSubmit,
-    mutation,
+    isPending: mutation.isPending,
+    userNameError,
+    emailError,
   };
 }
 
