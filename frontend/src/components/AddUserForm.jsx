@@ -12,7 +12,7 @@ function AddUserForm() {
 
   const [user, setUser] = useState(userData);
   const navigate = useNavigate();
-  const { handleSubmit, submitPending } = useHandleSubmit(null, user, addUser);
+  const { handleSubmit, mutation } = useHandleSubmit(null, user, addUser);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +22,7 @@ function AddUserForm() {
     }));
   };
 
-  if (submitPending) {
+  if (mutation.isPending) {
     return (
       <div className="text-center body-md text-on-surface-variant">
         Adding user...
@@ -101,9 +101,9 @@ function AddUserForm() {
           <button
             className="bg-tertiary text-on-tertiary px-10 py-3.5 rounded-md font-semibold text-sm hover:opacity-90 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
             type="submit"
-            disabled={submitPending}
+            disabled={mutation.isPending}
           >
-            {submitPending ? "Adding..." : "Add User"}
+            {mutation.isPending ? "Adding..." : "Add User"}
           </button>
         </div>
       </form>
