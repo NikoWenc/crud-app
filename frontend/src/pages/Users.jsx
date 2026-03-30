@@ -5,6 +5,7 @@ import useHandleDelete from "../hooks/useHandleDelete";
 import usePagination from "../hooks/usePagination";
 import SearchBar from "../components/SearchBar";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Users = () => {
   const navigate = useNavigate();
@@ -35,6 +36,13 @@ const Users = () => {
     startIndex,
     endIndex,
   } = usePagination(users);
+
+  // If the current page has no users but there are still users in total, go back to the previous page
+  useEffect(() => {
+    if (currentUsers.length === 0 && totalUsers > 0) {
+      handlePrevPage();
+    }
+  }, [currentUsers, totalUsers, handlePrevPage]);
 
   if (isLoading) {
     return (
